@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Algorithm Arena - Think Like The Algorithm</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Floating Achievement Notification Toast -->
+  <div id="toast-notification" class="toast hidden">
+    <div class="toast-icon">🏆</div>
+    <div class="toast-content">
+      <h4 id="toast-title">Badge Unlocked!</h4>
+      <p id="toast-desc">BFS Explorer unlocked.</p>
+    </div>
+  </div>
+
+  <!-- Main Navigation Bar -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <div class="logo" onclick="switchTab('home')">
+        <span class="logo-icon">🔮</span>
+        <span class="logo-text">ALGORITHM<br><small>ARENA</small></span>
+      </div>
+      
+      <ul class="nav-links">
+        <li class="nav-item active" data-tab="home" onclick="switchTab('home')">Home</li>
+        <li class="nav-item" data-tab="missions" onclick="switchTab('missions')">Missions</li>
+        <li class="nav-item" data-tab="learn" onclick="switchTab('learn')">Learn Mode</li>
+        <li class="nav-item" data-tab="lab" onclick="switchTab('lab')">Algorithm Lab</li>
+        <li class="nav-item" data-tab="complexity" onclick="switchTab('complexity')">Complexity</li>
+        <li class="nav-item" data-tab="quiz" onclick="switchTab('quiz')">Decisions</li>
+        <li class="nav-item" data-tab="challenge" onclick="switchTab('challenge')">Final Arena</li>
+      </ul>
+
+      <div class="nav-stats">
+        <div class="xp-badge">
+          <span class="xp-star">⭐</span>
+          <span id="nav-xp">0</span> <small>XP</small>
+        </div>
+        <div class="user-avatar" onclick="openBadgesModal()" title="View Badges">
+          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236366f1'/><text x='50' y='60' font-family='sans-serif' font-size='35' fill='white' text-anchor='middle' font-weight='bold'>A</text></svg>" alt="Avatar">
+          <span class="badge-count-dot" id="nav-badge-count">0</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main App Sections -->
+  <main class="main-content">
+
+    <!-- 1. LANDING PAGE SECTION -->
+    <section id="tab-home" class="tab-section active">
+      <div class="hero-container">
+        <div class="hero-info">
+          <div class="badge-tag">🎓 Interactive Algorithm Simulator</div>
+          <h1 class="hero-title">
+            DON'T JUST LEARN ALGORITHMS.<br>
+            <span class="gradient-text">THINK LIKE THE ALGORITHM.</span>
+          </h1>
+          <p class="hero-subtitle">
+            Explore real-world scenarios, make critical algorithmic decisions, visualize every step, and discover why different algorithms behave the way they do.
+          </p>
+          <div class="hero-ctas">
+            <button class="btn btn-primary" onclick="switchTab('missions')">START YOUR JOURNEY →</button>
+            <button class="btn btn-secondary" onclick="switchTab('learn')">EXPLORE ALGORITHMS</button>
+          </div>
+        </div>
+        
+        <div class="hero-visual">
+          <div class="hero-card">
+            <!-- Simulated interactive micro graph/sorting array that moves -->
+            <div class="visual-header">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+              <span class="visual-title">Arena-Engine v1.0</span>
+            </div>
+            <div class="visual-body" id="hero-animation-container">
+              <!-- Render an animated layout here via canvas or HTML elements -->
+              <canvas id="hero-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Concept Feature Grid -->
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon bg-blue">🔍</div>
+          <h3>Graph Traverse</h3>
+          <p>Rescue a team in a social network or escape a recursive maze using BFS & DFS.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon bg-purple">⚡</div>
+          <h3>Shortest Paths</h3>
+          <p>Navigate a medical dispatch ambulance using Dijkstra's shortest path relaxation.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon bg-orange">📦</div>
+          <h3>Sorting Factory</h3>
+          <p>Organize chaotic warehouses with Bubble, Merge, and Quick Sort mechanics.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 2. MISSIONS SECTION (STORY MODE) -->
+    <section id="tab-missions" class="tab-section">
+      <!-- Mission Path Selector (Linear Road like Duolingo) -->
+      <div class="mission-path-container" id="mission-path-view">
+        <div class="section-header text-center">
+          <h2 class="section-title">THE ALGORITHM EXPEDITION</h2>
+          <p class="section-subtitle">Unlock and conquer each mission to level up your algorithmic skills.</p>
+        </div>
+        
+        <div class="duo-road">
+          <!-- Step nodes will be generated dynamically or styled clearly -->
+          <div class="road-node active" onclick="startMission('bfs')" id="node-bfs">
+            <div class="node-circle">🔍</div>
+            <span class="node-label">BFS: Connection Finder</span>
+            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+          </div>
+          <div class="road-line"></div>
+
+          <div class="road-node locked" onclick="startMission('dfs')" id="node-dfs">
+            <div class="node-circle">🚪</div>
+            <span class="node-label">DFS: Escape Maze</span>
+            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+          </div>
+          <div class="road-line"></div>
+
+          <div class="road-node locked" onclick="startMission('dijkstra')" id="node-dijkstra">
+            <div class="node-circle">🚑</div>
+            <span class="node-label">Dijkstra: Emergency Route</span>
+            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+          </div>
+          <div class="road-line"></div>
+
+          <div class="road-node locked" onclick="startMission('bubble')" id="node-bubble">
+            <div class="node-circle">🫧</div>
+            <span class="node-label">Bubble Sort: Warehouse</span>
+            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+          </div>
+          <div class="road-line"></div>
+
+          <div class="road-node locked" onclick="startMission('merge')" id="node-merge">
+            <div class="node-circle">🧩</div>
+            <span class="node-label">Merge Sort: Divide & Conquer</span>
+            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+          </div>
+          <div class="road-line"></div>
+
+          <div class="road-node locked" onclick="startMission('quick')" id="node-quick">
+            <div class="node-circle">⚡</div>
+            <span class="node-label">Quick Sort: Pivot Master</span>
+            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Active Mission Play View -->
+      <div class="mission-play-container hidden" id="mission-play-view">
+        <div class="mission-header">
+          <button class="btn-back" onclick="exitMission()">← Back to Expedition</button>
+          <h2 id="active-mission-title">Mission: Connection Finder</h2>
+          <div class="mission-progress-pill">
+            Progress: <span id="mission-progress-percent">0%</span>
+          </div>
+        </div>
+
+        <div class="mission-split-layout">
+          <!-- Left Panel: Character Dialogue and Options -->
+          <div class="dialogue-panel">
+            <div class="companion-card">
+              <div class="companion-avatar" id="companion-img">👨‍🏫</div>
+              <div class="companion-info">
+                <h4 id="companion-name">Professor Algo</h4>
+                <p class="companion-role">Arena Guide</p>
+              </div>
+            </div>
+            
+            <div class="dialogue-bubble">
+              <p id="dialogue-text">Welcome, recruit! We have a critical mission to trace the shortest friendship path.</p>
+            </div>
+
+            <!-- Dialogue Interaction Options -->
+            <div class="dialogue-options" id="dialogue-options-box">
+              <!-- Dynamic buttons go here -->
+            </div>
+
+            <!-- Feedback Panel -->
+            <div class="feedback-card hidden" id="dialogue-feedback">
+              <div class="feedback-icon" id="feedback-icon">🎉</div>
+              <div class="feedback-content">
+                <h4 id="feedback-title">Correct!</h4>
+                <p id="feedback-message">That is right! Let's watch BFS explore level by level.</p>
+              </div>
+              <button class="btn btn-primary" id="btn-feedback-next" onclick="advanceDialogue()">Next →</button>
+            </div>
+
+            <!-- Hint Panel -->
+            <div class="hint-card hidden" id="mission-hint-box">
+              <span class="hint-label">💡 Hint</span>
+              <p id="mission-hint-text">Think about exploring immediately adjacent neighbors first.</p>
+            </div>
+          </div>
+
+          <!-- Right Panel: Visualizer Workspace -->
+          <div class="workspace-panel">
+            <div class="workspace-header">
+              <span class="workspace-label">Simulation View</span>
+              <div class="visualizer-legend" id="workspace-legend">
+                <!-- Dynamic Legend -->
+              </div>
+            </div>
+            
+            <div class="visualizer-container" id="visualizer-board">
+              <!-- BFS / Dijkstra Graph, DFS Maze, or Sorting Bars rendered here -->
+              <div id="graph-visualizer-root" class="visualizer-content animate-fade"></div>
+              <div id="maze-visualizer-root" class="visualizer-content hidden"></div>
+              <div id="sorting-visualizer-root" class="visualizer-content hidden"></div>
+            </div>
+
+            <!-- Data Structures Trace Bar -->
+            <div class="data-trace-bar" id="data-structure-trace">
+              <span class="trace-title" id="trace-ds-name">QUEUE</span>
+              <div class="trace-items" id="trace-ds-container">
+                <!-- Visually shows Queue: [Maya] -> [Sam] or Stack, etc. -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 3. LEARN MODE (TRADITIONAL STUDY GUIDES) -->
+    <section id="tab-learn" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">THE ALGORITHM ALMANAC</h2>
+        <p class="section-subtitle">A classic study guide with pseudocode, complexities, and core concepts.</p>
+      </div>
+
+      <div class="learn-container">
+        <!-- Sidebar Navigation -->
+        <aside class="learn-sidebar">
+          <ul class="learn-menu">
+            <li class="menu-item active" onclick="loadLearnDoc('bfs')">Breadth-First Search</li>
+            <li class="menu-item" onclick="loadLearnDoc('dfs')">Depth-First Search</li>
+            <li class="menu-item" onclick="loadLearnDoc('dijkstra')">Dijkstra's Algorithm</li>
+            <li class="menu-item" onclick="loadLearnDoc('bubble')">Bubble Sort</li>
+            <li class="menu-item" onclick="loadLearnDoc('merge')">Merge Sort</li>
+            <li class="menu-item" onclick="loadLearnDoc('quick')">Quick Sort</li>
+          </ul>
+        </aside>
+
+        <!-- Document Viewer Content -->
+        <article class="learn-content-view" id="learn-article-body">
+          <!-- Dynamic Content Loaded Here -->
+        </article>
+      </div>
+    </section>
+
+
+    <!-- 4. ALGORITHM LAB (EXPERIMENTATION AREA) -->
+    <section id="tab-lab" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">ALGORITHM EXPERIMENTATION LAB</h2>
+        <p class="section-subtitle">Configure parameters, generate custom inputs, and compare execution metrics live.</p>
+      </div>
+
+      <div class="lab-grid">
+        <!-- Configuration Control Panel -->
+        <div class="lab-card lab-controls">
+          <h3>🔧 Setup Panel</h3>
+          
+          <div class="control-group">
+            <label for="lab-algo-select">Select Algorithm</label>
+            <select id="lab-algo-select" onchange="onLabAlgoChange()">
+              <option value="bfs">Breadth-First Search (BFS)</option>
+              <option value="dfs">Depth-First Search (DFS)</option>
+              <option value="dijkstra">Dijkstra's Shortest Path</option>
+              <option value="bubble">Bubble Sort</option>
+              <option value="merge">Merge Sort</option>
+              <option value="quick">Quick Sort</option>
+            </select>
+          </div>
+
+          <!-- Sorting Controls -->
+          <div id="lab-sorting-controls" class="control-subgroup">
+            <div class="control-group">
+              <label for="lab-array-size">Array Size: <span id="val-array-size">15</span></label>
+              <input type="range" id="lab-array-size" min="5" max="50" value="15" oninput="updateLabControlsLabel('array-size')">
+            </div>
+            <div class="control-group">
+              <label for="lab-data-type">Initial Data Distribution</label>
+              <select id="lab-data-type">
+                <option value="random">Randomly Scattered</option>
+                <option value="nearly-sorted">Nearly Sorted</option>
+                <option value="reversed">Reversed / Worst Case</option>
+                <option value="duplicates">Contains Many Duplicates</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Graph Controls -->
+          <div id="lab-graph-controls" class="control-subgroup hidden">
+            <div class="control-group">
+              <label for="lab-node-count">Number of Nodes: <span id="val-node-count">8</span></label>
+              <input type="range" id="lab-node-count" min="4" max="15" value="8" oninput="updateLabControlsLabel('node-count')">
+            </div>
+            <div class="control-group">
+              <label for="lab-graph-density">Graph Density</label>
+              <select id="lab-graph-density">
+                <option value="low">Sparse (Few Edges)</option>
+                <option value="medium" selected>Medium Connectivity</option>
+                <option value="high">Dense (Many Edges)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="control-group">
+            <label for="lab-sim-speed">Simulation Speed: <span id="val-sim-speed">Medium</span></label>
+            <input type="range" id="lab-sim-speed" min="1" max="3" value="2" oninput="updateLabControlsLabel('sim-speed')">
+          </div>
+
+          <div class="lab-actions">
+            <button class="btn btn-secondary w-full" onclick="generateLabInput()">GENERATE INPUT</button>
+            <button class="btn btn-primary w-full" onclick="runLabAlgorithm()">RUN ALGORITHM</button>
+            <button class="btn btn-accent w-full" onclick="switchTab('complexity')">GO TO SHOWDOWN</button>
+          </div>
+        </div>
+
+        <!-- Simulation Arena Output -->
+        <div class="lab-card lab-simulation">
+          <div class="sim-header">
+            <h3>🖥️ Live Execution Canvas</h3>
+            <span class="status-pill status-ready" id="sim-status">Ready</span>
+          </div>
+
+          <div class="sim-canvas" id="lab-canvas-container">
+            <!-- Dynamic workspace render -->
+            <div id="lab-render-root"></div>
+          </div>
+
+          <!-- Performance Dash Counters -->
+          <div class="performance-dash">
+            <div class="counter-box">
+              <span class="counter-value" id="counter-time">0 ms</span>
+              <span class="counter-label">Execution Time</span>
+            </div>
+            <div class="counter-box">
+              <span class="counter-value" id="counter-ops">0</span>
+              <span class="counter-label">Operations</span>
+            </div>
+            <div class="counter-box">
+              <span class="counter-value" id="counter-comp">0</span>
+              <span class="counter-label">Comparisons</span>
+            </div>
+            <div class="counter-box">
+              <span class="counter-value" id="counter-swaps">0</span>
+              <span class="counter-label">Swaps / Updates</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 5. COMPLEXITY EXPLORER & SHOWDOWN -->
+    <section id="tab-complexity" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">THE SORTING SHOWDOWN & GROWTH CURVES</h2>
+        <p class="section-subtitle">Observe how algorithmic efficiency scales as the size of data expands.</p>
+      </div>
+
+      <div class="showdown-grid">
+        <!-- Interactive Chart growth curves -->
+        <div class="lab-card showdown-chart-card">
+          <h3>📈 Growth Rate Explorer</h3>
+          <p>Drag the slider to increase data elements ($N$) and watch operations multiply based on Time Complexity equations.</p>
+          
+          <div class="slider-box">
+            <label for="complexity-n-slider">Input Size ($N$): <strong id="val-complexity-n">50</strong></label>
+            <input type="range" id="complexity-n-slider" min="10" max="500" step="10" value="50" oninput="updateComplexitySlider(this.value)">
+          </div>
+
+          <div class="chart-wrapper">
+            <div class="chart-bars-container" id="showdown-bars-container">
+              <!-- Generated growth bars -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Complexity Theory Cards -->
+        <div class="lab-card showdown-table-card">
+          <h3>🏆 Efficiency Ledger</h3>
+          <table class="showdown-table">
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Complexity</th>
+                <th>Calculated Ops for <span id="n-label-table">N=50</span></th>
+                <th>Classification</th>
+              </tr>
+            </thead>
+            <tbody id="showdown-table-body">
+              <!-- Injected dynamically -->
+            </tbody>
+          </table>
+
+          <div class="algorithm-insight-card">
+            <h4>💡 Complexity Insights</h4>
+            <p id="complexity-explanation-text">At N=50, Quadratic $O(N^2)$ algorithms like Bubble Sort run orders of magnitude slower than Linearithmic $O(N \log N)$ algorithms like Merge Sort.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 6. WHICH ALGORITHM WOULD YOU CHOOSE? (DECISION QUIZ) -->
+    <section id="tab-quiz" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">DECISION ROOM: WHAT WOULD YOU CHOOSE?</h2>
+        <p class="section-subtitle">Place yourself in actual software engineering constraints and select the optimal strategy.</p>
+      </div>
+
+      <div class="quiz-container">
+        <!-- Progress Indicator -->
+        <div class="quiz-progress-bar">
+          <div class="fill" id="quiz-progress-fill" style="width: 20%"></div>
+        </div>
+
+        <div class="quiz-card">
+          <div class="quiz-q-num">Scenario <span id="quiz-current-num">1</span> of 5</div>
+          <h3 id="quiz-question-title">Loading question...</h3>
+          <p class="quiz-question-desc" id="quiz-question-desc">Scenario details here...</p>
+
+          <div class="quiz-choices" id="quiz-choices-box">
+            <!-- Dynamic Choice Cards -->
+          </div>
+
+          <div class="quiz-answer-feedback hidden" id="quiz-answer-feedback">
+            <h4 id="quiz-feedback-title">Correct!</h4>
+            <p id="quiz-feedback-msg">Explanation here...</p>
+            <button class="btn btn-primary" onclick="nextQuizQuestion()">Continue →</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- 7. FINAL ARENA CHALLENGE -->
+    <section id="tab-challenge" class="tab-section">
+      <div class="section-header">
+        <h2 class="section-title">THE FINAL ALGORITHM ARENA</h2>
+        <p class="section-subtitle">Your ultimate test. Demonstrate core selection, step prediction, and resource analysis.</p>
+      </div>
+
+      <!-- Pre-challenge Welcome -->
+      <div class="arena-welcome-card" id="arena-start-card">
+        <div class="welcome-decor">🏆</div>
+        <h2>Enter the Grand Arena</h2>
+        <p>You will face 4 dynamic challenges. You must select the right algorithm, predict intermediate steps, and evaluate complexity under strict constraints. Hint usage decreases your scoring.</p>
+        <button class="btn btn-primary" onclick="startFinalChallenge()">ENTER ARENA</button>
+      </div>
+
+      <!-- Live Challenge Board -->
+      <div class="arena-board-card hidden" id="arena-play-card">
+        <div class="arena-header">
+          <div class="arena-stats-row">
+            <span>Question <strong id="arena-q-num">1</strong>/4</span>
+            <span>Arena Score: <strong id="arena-live-score">0</strong></span>
+          </div>
+          <div class="arena-progress-bar"><div class="fill" id="arena-progress-fill" style="width: 25%"></div></div>
+        </div>
+
+        <div class="arena-body">
+          <div class="arena-quest-box">
+            <h3 id="arena-question-text">Scenario goes here</h3>
+            <div class="challenge-visual-box" id="arena-visual-box">
+              <!-- Renders custom small tables/arrays/graphs for the task -->
+            </div>
+          </div>
+
+          <div class="arena-answers-box">
+            <h4>Select Your Answer:</h4>
+            <div class="arena-options-grid" id="arena-options-container">
+              <!-- Choices -->
+            </div>
+          </div>
+
+          <div class="arena-feedback hidden" id="arena-feedback-box">
+            <h4 id="arena-feedback-title">Decision Registered</h4>
+            <p id="arena-feedback-text">Details here...</p>
+            <button class="btn btn-primary" onclick="nextArenaQuestion()">Advance to Next Challenge</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Challenge Scorecard Results -->
+      <div class="scorecard-container hidden" id="arena-scorecard-card">
+        <div class="scorecard-header text-center">
+          <div class="trophy-badge">🏆</div>
+          <h2>GRAND ARENA EVALUATION</h2>
+          <p>Your performance has been thoroughly analyzed by the Arena Engine.</p>
+        </div>
+
+        <div class="scorecard-radar-box">
+          <div class="scorecard-meter">
+            <div class="meter-circle">
+              <span class="meter-value" id="scorecard-percent">0%</span>
+              <span class="meter-sub">Overall Rating</span>
+            </div>
+          </div>
+
+          <div class="scorecard-metrics">
+            <div class="metric-row">
+              <span>Algorithm Selection</span>
+              <div class="bar-container"><div class="bar-fill bg-blue" id="metric-selection-fill" style="width: 0%"></div></div>
+              <span id="metric-selection-val">0%</span>
+            </div>
+            <div class="metric-row">
+              <span>Step Execution & Pathing</span>
+              <div class="bar-container"><div class="bar-fill bg-purple" id="metric-execution-fill" style="width: 0%"></div></div>
+              <span id="metric-execution-val">0%</span>
+            </div>
+            <div class="metric-row">
+              <span>Complexity Understanding</span>
+              <div class="bar-container"><div class="bar-fill bg-orange" id="metric-complexity-fill" style="width: 0%"></div></div>
+              <span id="metric-complexity-val">0%</span>
+            </div>
+            <div class="metric-row">
+              <span>Decision Speed & Hints</span>
+              <div class="bar-container"><div class="bar-fill bg-green" id="metric-hints-fill" style="width: 0%"></div></div>
+              <span id="metric-hints-val">0%</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="scorecard-title-award text-center">
+          <h3>AWARDED TITLE: <span class="badge-title-highlight" id="scorecard-title-text">ALGORITHM STRATEGIST</span></h3>
+          <p id="scorecard-eval-desc">Fantastic job! You've shown strong mastery over graph traversals, shortest path relaxations, and sorting partitioning principles.</p>
+          <div class="scorecard-buttons">
+            <button class="btn btn-primary" onclick="restartArena()">RETRY THE ARENA</button>
+            <button class="btn btn-secondary" onclick="switchTab('lab')">EXPERIMENT IN LAB</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Badges Modal -->
+  <div class="modal hidden" id="badges-modal">
+    <div class="modal-overlay" onclick="closeBadgesModal()"></div>
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>🏆 Earned Badges Portfolio</h3>
+        <button class="btn-close" onclick="closeBadgesModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="badges-shelf-grid" id="modal-badges-grid">
+          <!-- Populated by JS -->
+          <div class="badge-item locked" data-badge="bfs">
+            <div class="badge-icon">🏅</div>
+            <h4>BFS Beginner</h4>
+            <p>Complete the social connections finder mission.</p>
+          </div>
+          <div class="badge-item locked" data-badge="dfs">
+            <div class="badge-icon">🕵️</div>
+            <h4>DFS Explorer</h4>
+            <p>Escape the recursive backtracking maze.</p>
+          </div>
+          <div class="badge-item locked" data-badge="dijkstra">
+            <div class="badge-icon">🚑</div>
+            <h4>Shortest Path Specialist</h4>
+            <p>Determine the optimal emergency rescue route.</p>
+          </div>
+          <div class="badge-item locked" data-badge="bubble">
+            <div class="badge-icon">🫧</div>
+            <h4>Bubble Sort Survivor</h4>
+            <p>Resolve adjacent comparisons in the bubble machine.</p>
+          </div>
+          <div class="badge-item locked" data-badge="merge">
+            <div class="badge-icon">🧩</div>
+            <h4>Divide & Conquer Master</h4>
+            <p>Successfully build a complete merge sort recursion tree.</p>
+          </div>
+          <div class="badge-item locked" data-badge="quick">
+            <div class="badge-icon">⚡</div>
+            <h4>Pivot Master</h4>
+            <p>Partition arrays with high efficiency using Quick Sort.</p>
+          </div>
+          <div class="badge-item locked" data-badge="strategist">
+            <div class="badge-icon">🧠</div>
+            <h4>Algorithm Strategist</h4>
+            <p>Score 85%+ on the Grand Arena Final Evaluation.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="visualizers.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
