@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,13 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
   <!-- Floating Achievement Notification Toast -->
@@ -29,7 +33,7 @@
         <span class="logo-icon">🔮</span>
         <span class="logo-text">ALGORITHM<br><small>ARENA</small></span>
       </div>
-      
+
       <ul class="nav-links">
         <li class="nav-item active" data-tab="home" onclick="switchTab('home')">Home</li>
         <li class="nav-item" data-tab="missions" onclick="switchTab('missions')">Missions</li>
@@ -46,7 +50,9 @@
           <span id="nav-xp">0</span> <small>XP</small>
         </div>
         <div class="user-avatar" onclick="openBadgesModal()" title="View Badges">
-          <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236366f1'/><text x='50' y='60' font-family='sans-serif' font-size='35' fill='white' text-anchor='middle' font-weight='bold'>A</text></svg>" alt="Avatar">
+          <img
+            src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%236366f1'/><text x='50' y='60' font-family='sans-serif' font-size='35' fill='white' text-anchor='middle' font-weight='bold'>A</text></svg>"
+            alt="Avatar">
           <span class="badge-count-dot" id="nav-badge-count">0</span>
         </div>
       </div>
@@ -66,14 +72,15 @@
             <span class="gradient-text">THINK LIKE THE ALGORITHM.</span>
           </h1>
           <p class="hero-subtitle">
-            Explore real-world scenarios, make critical algorithmic decisions, visualize every step, and discover why different algorithms behave the way they do.
+            Explore real-world scenarios, make critical algorithmic decisions, visualize every step, and discover why
+            different algorithms behave the way they do.
           </p>
           <div class="hero-ctas">
             <button class="btn btn-primary" onclick="switchTab('missions')">START YOUR JOURNEY →</button>
             <button class="btn btn-secondary" onclick="switchTab('learn')">EXPLORE ALGORITHMS</button>
           </div>
         </div>
-        
+
         <div class="hero-visual">
           <div class="hero-card">
             <!-- Simulated interactive micro graph/sorting array that moves -->
@@ -120,48 +127,60 @@
           <h2 class="section-title">THE ALGORITHM EXPEDITION</h2>
           <p class="section-subtitle">Unlock and conquer each mission to level up your algorithmic skills.</p>
         </div>
-        
+
         <div class="duo-road">
           <!-- Step nodes will be generated dynamically or styled clearly -->
           <div class="road-node active" onclick="startMission('bfs')" id="node-bfs">
             <div class="node-circle">🔍</div>
             <span class="node-label">BFS: Connection Finder</span>
-            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+            <div class="node-progress-bar">
+              <div class="fill" style="width: 0%"></div>
+            </div>
           </div>
           <div class="road-line"></div>
 
           <div class="road-node locked" onclick="startMission('dfs')" id="node-dfs">
             <div class="node-circle">🚪</div>
             <span class="node-label">DFS: Escape Maze</span>
-            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+            <div class="node-progress-bar">
+              <div class="fill" style="width: 0%"></div>
+            </div>
           </div>
           <div class="road-line"></div>
 
           <div class="road-node locked" onclick="startMission('dijkstra')" id="node-dijkstra">
             <div class="node-circle">🚑</div>
             <span class="node-label">Dijkstra: Emergency Route</span>
-            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+            <div class="node-progress-bar">
+              <div class="fill" style="width: 0%"></div>
+            </div>
           </div>
           <div class="road-line"></div>
 
           <div class="road-node locked" onclick="startMission('bubble')" id="node-bubble">
             <div class="node-circle">🫧</div>
             <span class="node-label">Bubble Sort: Warehouse</span>
-            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+            <div class="node-progress-bar">
+              <div class="fill" style="width: 0%"></div>
+            </div>
           </div>
           <div class="road-line"></div>
 
           <div class="road-node locked" onclick="startMission('merge')" id="node-merge">
             <div class="node-circle">🧩</div>
             <span class="node-label">Merge Sort: Divide & Conquer</span>
-            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+            <div class="node-progress-bar">
+              <div class="fill" style="width: 0%"></div>
+            </div>
           </div>
           <div class="road-line"></div>
 
           <div class="road-node locked" onclick="startMission('quick')" id="node-quick">
             <div class="node-circle">⚡</div>
             <span class="node-label">Quick Sort: Pivot Master</span>
-            <div class="node-progress-bar"><div class="fill" style="width: 0%"></div></div>
+            <div class="node-progress-bar">
+              <div class="fill" style="width: 0%"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -186,9 +205,10 @@
                 <p class="companion-role">Arena Guide</p>
               </div>
             </div>
-            
+
             <div class="dialogue-bubble">
-              <p id="dialogue-text">Welcome, recruit! We have a critical mission to trace the shortest friendship path.</p>
+              <p id="dialogue-text">Welcome, recruit! We have a critical mission to trace the shortest friendship path.
+              </p>
             </div>
 
             <!-- Dialogue Interaction Options -->
@@ -221,7 +241,7 @@
                 <!-- Dynamic Legend -->
               </div>
             </div>
-            
+
             <div class="visualizer-container" id="visualizer-board">
               <!-- BFS / Dijkstra Graph, DFS Maze, or Sorting Bars rendered here -->
               <div id="graph-visualizer-root" class="visualizer-content animate-fade"></div>
@@ -274,14 +294,15 @@
     <section id="tab-lab" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">ALGORITHM EXPERIMENTATION LAB</h2>
-        <p class="section-subtitle">Configure parameters, generate custom inputs, and compare execution metrics live.</p>
+        <p class="section-subtitle">Configure parameters, generate custom inputs, and compare execution metrics live.
+        </p>
       </div>
 
       <div class="lab-grid">
         <!-- Configuration Control Panel -->
         <div class="lab-card lab-controls">
           <h3>🔧 Setup Panel</h3>
-          
+
           <div class="control-group">
             <label for="lab-algo-select">Select Algorithm</label>
             <select id="lab-algo-select" onchange="onLabAlgoChange()">
@@ -298,7 +319,8 @@
           <div id="lab-sorting-controls" class="control-subgroup">
             <div class="control-group">
               <label for="lab-array-size">Array Size: <span id="val-array-size">15</span></label>
-              <input type="range" id="lab-array-size" min="5" max="50" value="15" oninput="updateLabControlsLabel('array-size')">
+              <input type="range" id="lab-array-size" min="5" max="50" value="15"
+                oninput="updateLabControlsLabel('array-size')">
             </div>
             <div class="control-group">
               <label for="lab-data-type">Initial Data Distribution</label>
@@ -315,7 +337,8 @@
           <div id="lab-graph-controls" class="control-subgroup hidden">
             <div class="control-group">
               <label for="lab-node-count">Number of Nodes: <span id="val-node-count">8</span></label>
-              <input type="range" id="lab-node-count" min="4" max="15" value="8" oninput="updateLabControlsLabel('node-count')">
+              <input type="range" id="lab-node-count" min="4" max="15" value="8"
+                oninput="updateLabControlsLabel('node-count')">
             </div>
             <div class="control-group">
               <label for="lab-graph-density">Graph Density</label>
@@ -329,7 +352,8 @@
 
           <div class="control-group">
             <label for="lab-sim-speed">Simulation Speed: <span id="val-sim-speed">Medium</span></label>
-            <input type="range" id="lab-sim-speed" min="1" max="3" value="2" oninput="updateLabControlsLabel('sim-speed')">
+            <input type="range" id="lab-sim-speed" min="1" max="3" value="2"
+              oninput="updateLabControlsLabel('sim-speed')">
           </div>
 
           <div class="lab-actions">
@@ -386,11 +410,13 @@
         <!-- Interactive Chart growth curves -->
         <div class="lab-card showdown-chart-card">
           <h3>📈 Growth Rate Explorer</h3>
-          <p>Drag the slider to increase data elements ($N$) and watch operations multiply based on Time Complexity equations.</p>
-          
+          <p>Drag the slider to increase data elements (N) and watch operations multiply based on Time Complexity
+            equations.</p>
+
           <div class="slider-box">
-            <label for="complexity-n-slider">Input Size ($N$): <strong id="val-complexity-n">50</strong></label>
-            <input type="range" id="complexity-n-slider" min="10" max="500" step="10" value="50" oninput="updateComplexitySlider(this.value)">
+            <label for="complexity-n-slider">Input Size (N): <strong id="val-complexity-n">50</strong></label>
+            <input type="range" id="complexity-n-slider" min="10" max="500" step="10" value="50"
+              oninput="updateComplexitySlider(this.value)">
           </div>
 
           <div class="chart-wrapper">
@@ -419,7 +445,8 @@
 
           <div class="algorithm-insight-card">
             <h4>💡 Complexity Insights</h4>
-            <p id="complexity-explanation-text">At N=50, Quadratic $O(N^2)$ algorithms like Bubble Sort run orders of magnitude slower than Linearithmic $O(N \log N)$ algorithms like Merge Sort.</p>
+            <p id="complexity-explanation-text">At N=50, Quadratic O(N^2) algorithms like Bubble Sort run orders of
+              magnitude slower than Linearithmic O(N \log N) algorithms like Merge Sort.</p>
           </div>
         </div>
       </div>
@@ -430,7 +457,8 @@
     <section id="tab-quiz" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">DECISION ROOM: WHAT WOULD YOU CHOOSE?</h2>
-        <p class="section-subtitle">Place yourself in actual software engineering constraints and select the optimal strategy.</p>
+        <p class="section-subtitle">Place yourself in actual software engineering constraints and select the optimal
+          strategy.</p>
       </div>
 
       <div class="quiz-container">
@@ -462,14 +490,16 @@
     <section id="tab-challenge" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">THE FINAL ALGORITHM ARENA</h2>
-        <p class="section-subtitle">Your ultimate test. Demonstrate core selection, step prediction, and resource analysis.</p>
+        <p class="section-subtitle">Your ultimate test. Demonstrate core selection, step prediction, and resource
+          analysis.</p>
       </div>
 
       <!-- Pre-challenge Welcome -->
       <div class="arena-welcome-card" id="arena-start-card">
         <div class="welcome-decor">🏆</div>
         <h2>Enter the Grand Arena</h2>
-        <p>You will face 4 dynamic challenges. You must select the right algorithm, predict intermediate steps, and evaluate complexity under strict constraints. Hint usage decreases your scoring.</p>
+        <p>You will face 4 dynamic challenges. You must select the right algorithm, predict intermediate steps, and
+          evaluate complexity under strict constraints. Hint usage decreases your scoring.</p>
         <button class="btn btn-primary" onclick="startFinalChallenge()">ENTER ARENA</button>
       </div>
 
@@ -480,7 +510,9 @@
             <span>Question <strong id="arena-q-num">1</strong>/4</span>
             <span>Arena Score: <strong id="arena-live-score">0</strong></span>
           </div>
-          <div class="arena-progress-bar"><div class="fill" id="arena-progress-fill" style="width: 25%"></div></div>
+          <div class="arena-progress-bar">
+            <div class="fill" id="arena-progress-fill" style="width: 25%"></div>
+          </div>
         </div>
 
         <div class="arena-body">
@@ -525,30 +557,40 @@
           <div class="scorecard-metrics">
             <div class="metric-row">
               <span>Algorithm Selection</span>
-              <div class="bar-container"><div class="bar-fill bg-blue" id="metric-selection-fill" style="width: 0%"></div></div>
+              <div class="bar-container">
+                <div class="bar-fill bg-blue" id="metric-selection-fill" style="width: 0%"></div>
+              </div>
               <span id="metric-selection-val">0%</span>
             </div>
             <div class="metric-row">
               <span>Step Execution & Pathing</span>
-              <div class="bar-container"><div class="bar-fill bg-purple" id="metric-execution-fill" style="width: 0%"></div></div>
+              <div class="bar-container">
+                <div class="bar-fill bg-purple" id="metric-execution-fill" style="width: 0%"></div>
+              </div>
               <span id="metric-execution-val">0%</span>
             </div>
             <div class="metric-row">
               <span>Complexity Understanding</span>
-              <div class="bar-container"><div class="bar-fill bg-orange" id="metric-complexity-fill" style="width: 0%"></div></div>
+              <div class="bar-container">
+                <div class="bar-fill bg-orange" id="metric-complexity-fill" style="width: 0%"></div>
+              </div>
               <span id="metric-complexity-val">0%</span>
             </div>
             <div class="metric-row">
               <span>Decision Speed & Hints</span>
-              <div class="bar-container"><div class="bar-fill bg-green" id="metric-hints-fill" style="width: 0%"></div></div>
+              <div class="bar-container">
+                <div class="bar-fill bg-green" id="metric-hints-fill" style="width: 0%"></div>
+              </div>
               <span id="metric-hints-val">0%</span>
             </div>
           </div>
         </div>
 
         <div class="scorecard-title-award text-center">
-          <h3>AWARDED TITLE: <span class="badge-title-highlight" id="scorecard-title-text">ALGORITHM STRATEGIST</span></h3>
-          <p id="scorecard-eval-desc">Fantastic job! You've shown strong mastery over graph traversals, shortest path relaxations, and sorting partitioning principles.</p>
+          <h3>AWARDED TITLE: <span class="badge-title-highlight" id="scorecard-title-text">ALGORITHM STRATEGIST</span>
+          </h3>
+          <p id="scorecard-eval-desc">Fantastic job! You've shown strong mastery over graph traversals, shortest path
+            relaxations, and sorting partitioning principles.</p>
           <div class="scorecard-buttons">
             <button class="btn btn-primary" onclick="restartArena()">RETRY THE ARENA</button>
             <button class="btn btn-secondary" onclick="switchTab('lab')">EXPERIMENT IN LAB</button>
@@ -614,4 +656,5 @@
   <script src="visualizers.js"></script>
   <script src="app.js"></script>
 </body>
+
 </html>
