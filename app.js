@@ -9,23 +9,23 @@ const state = {
   unlockedMissions: ['bfs'],
   badges: new Set(),
   activeTab: 'home',
-  
+
   // Mission progression
   activeMission: null,
   activeStepIndex: 0,
   hintUsedInMission: false,
   perfectMission: true,
-  
+
   // Lab visualizer elements
   labAlgo: 'bfs',
   labInterval: null,
   labRunning: false,
   labData: null,
-  
+
   // Quiz states
   quizIndex: 0,
   quizScore: 0,
-  
+
   // Final Arena states
   arenaIndex: 0,
   arenaScore: 0,
@@ -54,7 +54,7 @@ function switchTab(tabId) {
   document.querySelectorAll('.tab-section').forEach(section => {
     section.classList.remove('active');
   });
-  
+
   const targetSection = document.getElementById(`tab-${tabId}`);
   if (targetSection) {
     targetSection.classList.add('active');
@@ -69,7 +69,7 @@ function switchTab(tabId) {
   });
 
   state.activeTab = tabId;
-  
+
   // Handle tab-specific initializations
   if (tabId === 'missions') {
     initDuoRoadProgress();
@@ -80,7 +80,7 @@ function switchTab(tabId) {
   } else if (tabId === 'quiz') {
     resetQuiz();
   }
-  
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
@@ -90,7 +90,7 @@ function switchTab(tabId) {
 function addXP(amount) {
   state.xp += amount;
   animateXPCount();
-  
+
   // Visual floating indicator
   const navXpEl = document.getElementById('nav-xp');
   if (navXpEl) {
@@ -111,14 +111,14 @@ function addXP(amount) {
 function animateXPCount() {
   const xpEl = document.getElementById('nav-xp');
   if (!xpEl) return;
-  
+
   const diff = state.xp - state.navXp;
   if (diff <= 0) return;
-  
+
   const step = Math.ceil(diff / 10);
   state.navXp += step;
   xpEl.textContent = state.navXp;
-  
+
   if (state.navXp < state.xp) {
     requestAnimationFrame(animateXPCount);
   }
@@ -126,17 +126,17 @@ function animateXPCount() {
 
 function unlockBadge(badgeId, title, desc) {
   if (state.badges.has(badgeId)) return;
-  
+
   state.badges.add(badgeId);
-  
+
   // Update navbar dot
   document.getElementById('nav-badge-count').textContent = state.badges.size;
-  
+
   // Show toast notification
   const toast = document.getElementById('toast-notification');
   document.getElementById('toast-title').textContent = `🏆 Badge Unlocked: ${title}`;
   document.getElementById('toast-desc').textContent = desc;
-  
+
   toast.classList.remove('hidden');
   setTimeout(() => {
     toast.classList.add('hidden');
@@ -194,7 +194,7 @@ function initHeroAnimation() {
   const canvas = document.getElementById('hero-canvas');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  
+
   let width = canvas.parentElement.clientWidth;
   let height = canvas.parentElement.clientHeight;
   canvas.width = width;
@@ -210,7 +210,7 @@ function initHeroAnimation() {
   ];
 
   let time = 0;
-  
+
   function draw() {
     ctx.clearRect(0, 0, width, height);
     time += 0.02;
@@ -242,7 +242,7 @@ function initHeroAnimation() {
     nodes.forEach((node, idx) => {
       const nx = node.x * width;
       const ny = node.y * height;
-      
+
       // Glow pulse
       node.pulse = Math.sin(time + idx) * 4;
       ctx.beginPath();
@@ -445,8 +445,8 @@ const missionStories = {
         hint: 'How do you return from a dead end in a maze?',
         action: (viz) => {
           // Highlight dead end path
-          const path = [[2,2],[2,1],[2,0],[3,0],[4,0],[5,0],[5,1],[5,2]];
-          path.forEach(([r,c]) => viz.updateCellState(r, c, 'visited'));
+          const path = [[2, 2], [2, 1], [2, 0], [3, 0], [4, 0], [5, 0], [5, 1], [5, 2]];
+          path.forEach(([r, c]) => viz.updateCellState(r, c, 'visited'));
           viz.updateCellState(5, 2, 'current');
           updateTraceDS('STACK', ['(0,0)', '(0,1)', '(0,2)', '(2,2)', '...']);
         }
@@ -462,8 +462,8 @@ const missionStories = {
         errorFeedback: 'Incorrect. DFS memory overhead is only the active path stack, which is linear to the depth of exploration: O(H).',
         hint: 'The maximum size of the call stack matches the path height.',
         action: (viz) => {
-          const escapePath = [[3,2],[3,3],[3,4],[4,4],[5,4],[5,5]];
-          escapePath.forEach(([r,c]) => viz.updateCellState(r, c, 'current'));
+          const escapePath = [[3, 2], [3, 3], [3, 4], [4, 4], [5, 4], [5, 5]];
+          escapePath.forEach(([r, c]) => viz.updateCellState(r, c, 'current'));
           updateTraceDS('STACK', ['(0,0)', '(0,1)', '(0,2)', '(2,2)', '(3,2)', '(3,3)', '(3,4)', '(4,4)', '(5,4)', '(5,5)']);
         }
       }
@@ -779,7 +779,7 @@ function startMission(missionId) {
   const gRoot = document.getElementById('graph-visualizer-root');
   const mRoot = document.getElementById('maze-visualizer-root');
   const sRoot = document.getElementById('sorting-visualizer-root');
-  
+
   gRoot.classList.add('hidden');
   mRoot.classList.add('hidden');
   sRoot.classList.add('hidden');
@@ -788,7 +788,7 @@ function startMission(missionId) {
     gRoot.classList.remove('hidden');
     activeVisualizer = new GraphVisualizer('graph-visualizer-root');
     activeVisualizer.setData(story.nodes, story.edges);
-    
+
     // Set Legend
     const legend = document.getElementById('workspace-legend');
     legend.innerHTML = `
@@ -800,7 +800,7 @@ function startMission(missionId) {
   } else if (missionId === 'dfs') {
     mRoot.classList.remove('hidden');
     activeVisualizer = new MazeVisualizer('maze-visualizer-root');
-    
+
     // Set Legend
     const legend = document.getElementById('workspace-legend');
     legend.innerHTML = `
@@ -814,7 +814,7 @@ function startMission(missionId) {
     sRoot.classList.remove('hidden');
     activeVisualizer = new SortingVisualizer('sorting-visualizer-root');
     activeVisualizer.setArray(story.array);
-    
+
     // Set Legend
     const legend = document.getElementById('workspace-legend');
     legend.innerHTML = `
@@ -876,15 +876,15 @@ function showDialogueStep() {
 function selectDialogueOption(selectedIndex) {
   const story = missionStories[state.activeMission];
   const step = story.steps[state.activeStepIndex];
-  
+
   const feedbackCard = document.getElementById('dialogue-feedback');
   const feedbackIcon = document.getElementById('feedback-icon');
   const feedbackTitle = document.getElementById('feedback-title');
   const feedbackMsg = document.getElementById('feedback-message');
-  
+
   document.getElementById('dialogue-options-box').innerHTML = '';
   document.getElementById('mission-hint-box').classList.add('hidden');
-  
+
   feedbackCard.classList.remove('hidden');
 
   if (selectedIndex === step.correct) {
@@ -892,7 +892,7 @@ function selectDialogueOption(selectedIndex) {
     feedbackIcon.textContent = '🎉';
     feedbackTitle.textContent = 'Correct!';
     feedbackMsg.textContent = step.feedback;
-    
+
     // Add XP
     const baseXP = 50;
     addXP(baseXP);
@@ -902,7 +902,7 @@ function selectDialogueOption(selectedIndex) {
     feedbackTitle.textContent = 'Not quite!';
     feedbackMsg.textContent = step.errorFeedback;
     state.perfectMission = false;
-    
+
     // Allow retry button
     const retryBtn = document.getElementById('btn-feedback-next');
     retryBtn.textContent = 'Retry Step ↩️';
@@ -932,12 +932,12 @@ function advanceDialogue() {
 
 function completeActiveMission() {
   const missionId = state.activeMission;
-  
+
   // XP rewards calculations
   let reward = 100; // completion reward
   if (!state.hintUsedInMission) reward += 100; // Perfect run no hints
   if (state.perfectMission) reward += 150; // Perfect choices
-  
+
   addXP(reward);
 
   // Badge mapping
@@ -981,13 +981,13 @@ function updateTraceDS(name, items) {
   document.getElementById('trace-ds-name').textContent = name;
   const container = document.getElementById('trace-ds-container');
   container.innerHTML = '';
-  
+
   items.forEach((item, idx) => {
     const el = document.createElement('div');
     el.className = 'trace-item';
     el.textContent = item;
     container.appendChild(el);
-    
+
     if (idx < items.length - 1) {
       const arrow = document.createElement('span');
       arrow.className = 'trace-arrow';
@@ -1187,12 +1187,12 @@ function onLabAlgoChange() {
   const select = document.getElementById('lab-algo-select');
   const value = select.value;
   state.labAlgo = value;
-  
+
   const sortSub = document.getElementById('lab-sorting-controls');
   const graphSub = document.getElementById('lab-graph-controls');
-  
+
   resetLabSimulator();
-  
+
   if (value === 'bfs' || value === 'dfs' || value === 'dijkstra') {
     sortSub.classList.add('hidden');
     graphSub.classList.remove('hidden');
@@ -1200,7 +1200,7 @@ function onLabAlgoChange() {
     sortSub.classList.remove('hidden');
     graphSub.classList.add('hidden');
   }
-  
+
   generateLabInput();
 }
 
@@ -1226,7 +1226,7 @@ function resetLabSimulator() {
   state.labRunning = false;
   document.getElementById('sim-status').className = 'status-pill status-ready';
   document.getElementById('sim-status').textContent = 'Ready';
-  
+
   // Reset counters
   document.getElementById('counter-time').textContent = '0 ms';
   document.getElementById('counter-ops').textContent = '0';
@@ -1238,13 +1238,13 @@ function generateLabInput() {
   resetLabSimulator();
   const renderRoot = document.getElementById('lab-render-root');
   renderRoot.innerHTML = '';
-  
+
   const algo = state.labAlgo;
-  
+
   if (algo === 'bfs' || algo === 'dfs' || algo === 'dijkstra') {
     const nodeCount = parseInt(document.getElementById('lab-node-count').value);
     const density = document.getElementById('lab-graph-density').value;
-    
+
     // Generate random layout coordinates
     const nodes = [];
     for (let i = 0; i < nodeCount; i++) {
@@ -1263,7 +1263,7 @@ function generateLabInput() {
     // Connect edges based on density
     const edges = [];
     const connectProb = density === 'low' ? 0.35 : density === 'medium' ? 0.55 : 0.8;
-    
+
     for (let i = 0; i < nodeCount; i++) {
       for (let j = i + 1; j < nodeCount; j++) {
         if (Math.random() < connectProb || j === i + 1) { // ensure some connectivity
@@ -1277,14 +1277,14 @@ function generateLabInput() {
     }
 
     state.labData = { nodes, edges };
-    
+
     activeVisualizer = new GraphVisualizer('lab-render-root');
     activeVisualizer.setData(nodes, edges);
   } else {
     // Generate sorting array
     const size = parseInt(document.getElementById('lab-array-size').value);
     const type = document.getElementById('lab-data-type').value;
-    
+
     let arr = [];
     if (type === 'random') {
       for (let i = 0; i < size; i++) arr.push(Math.floor(Math.random() * 90) + 10);
@@ -1307,7 +1307,7 @@ function generateLabInput() {
         arr.push(pool[Math.floor(Math.random() * pool.length)]);
       }
     }
-    
+
     state.labData = arr;
     activeVisualizer = new SortingVisualizer('lab-render-root');
     activeVisualizer.setArray(arr);
@@ -1317,7 +1317,7 @@ function generateLabInput() {
 function runLabAlgorithm() {
   if (state.labRunning) return;
   state.labRunning = true;
-  
+
   const statusEl = document.getElementById('sim-status');
   statusEl.className = 'status-pill status-running';
   statusEl.textContent = 'Running';
@@ -1326,7 +1326,7 @@ function runLabAlgorithm() {
   const delay = speedVal === 1 ? 800 : speedVal === 2 ? 300 : 80;
 
   const algo = state.labAlgo;
-  
+
   if (algo === 'bubble') {
     runBubbleSortLab(delay);
   } else if (algo === 'merge') {
@@ -1355,29 +1355,29 @@ function runBubbleSortLab(delay) {
         comps++;
         ops++;
         activeVisualizer.highlightComparing([j, j + 1]);
-        
+
         if (arr[j] > arr[j + 1]) {
           swaps++;
           ops++;
           const tmp = arr[j];
           arr[j] = arr[j + 1];
           arr[j + 1] = tmp;
-          
+
           activeVisualizer.swapBlocks(j, j + 1);
         }
-        
+
         // Remove highlight after swap animation
         const prevJ = j;
         setTimeout(() => {
           activeVisualizer.highlightComparing([prevJ, prevJ + 1], false);
         }, delay * 0.8);
-        
+
         j++;
       } else {
         j = 0;
         i++;
       }
-      
+
       // Update counters
       document.getElementById('counter-time').textContent = `${Math.round(performance.now() - startTime)} ms`;
       document.getElementById('counter-ops').textContent = ops;
@@ -1415,7 +1415,7 @@ function runMergeSortLab(delay) {
       comps++;
       ops++;
       yield { compare: [start + i, mid + 1 + j] };
-      
+
       if (left[i] <= right[j]) {
         arr[k] = left[i];
         swaps++;
@@ -1448,7 +1448,7 @@ function runMergeSortLab(delay) {
   }
 
   const gen = mergeSortGenerator(0, arr.length - 1);
-  
+
   state.labInterval = setInterval(() => {
     const res = gen.next();
     if (!res.done) {
@@ -1461,7 +1461,7 @@ function runMergeSortLab(delay) {
         activeVisualizer.highlightSwapped([step.write[0]]);
         setTimeout(() => activeVisualizer.highlightSwapped([step.write[0]], false), delay * 0.8);
       }
-      
+
       // Update counters
       document.getElementById('counter-time').textContent = `${Math.round(performance.now() - startTime)} ms`;
       document.getElementById('counter-ops').textContent = ++ops;
@@ -1508,13 +1508,13 @@ function runQuickSortLab(delay) {
         yield { swap: [i, j] };
       }
     }
-    
+
     swaps++;
     const tmp = arr[i + 1];
     arr[i + 1] = arr[high];
     arr[high] = tmp;
     yield { swap: [i + 1, high] };
-    
+
     return i + 1;
   }
 
@@ -1534,7 +1534,7 @@ function runQuickSortLab(delay) {
         activeVisualizer.highlightSwapped(step.swap);
         setTimeout(() => activeVisualizer.highlightSwapped(step.swap, false), delay * 0.8);
       }
-      
+
       // Update counters
       document.getElementById('counter-time').textContent = `${Math.round(performance.now() - startTime)} ms`;
       document.getElementById('counter-ops').textContent = ++ops;
@@ -1553,7 +1553,7 @@ function runQuickSortLab(delay) {
 function runBfsLab(delay) {
   const { nodes, edges } = state.labData;
   const startId = nodes[0].id;
-  
+
   let queue = [startId];
   let visited = new Set([startId]);
   let ops = 0;
@@ -1564,7 +1564,7 @@ function runBfsLab(delay) {
       const current = queue.shift();
       activeVisualizer.updateNodeState(current, 'current');
       ops++;
-      
+
       // Find neighbors
       const connectedEdges = edges.filter(e => e.source === current || e.target === current);
       connectedEdges.forEach(edge => {
@@ -1577,11 +1577,11 @@ function runBfsLab(delay) {
           ops++;
         }
       });
-      
+
       setTimeout(() => {
         activeVisualizer.updateNodeState(current, 'visited');
       }, delay * 0.9);
-      
+
       // Update counters
       document.getElementById('counter-time').textContent = `${Math.round(performance.now() - startTime)} ms`;
       document.getElementById('counter-ops').textContent = ops;
@@ -1599,7 +1599,7 @@ function runBfsLab(delay) {
 function runDfsLab(delay) {
   const { nodes, edges } = state.labData;
   const startId = nodes[0].id;
-  
+
   let stack = [startId];
   let visited = new Set();
   let ops = 0;
@@ -1608,12 +1608,12 @@ function runDfsLab(delay) {
   state.labInterval = setInterval(() => {
     if (stack.length > 0) {
       const current = stack.pop();
-      
+
       if (!visited.has(current)) {
         visited.add(current);
         activeVisualizer.updateNodeState(current, 'current');
         ops++;
-        
+
         // Find neighbors and push to stack
         const connectedEdges = edges.filter(e => e.source === current || e.target === current);
         connectedEdges.forEach(edge => {
@@ -1625,12 +1625,12 @@ function runDfsLab(delay) {
             ops++;
           }
         });
-        
+
         setTimeout(() => {
           activeVisualizer.updateNodeState(current, 'visited');
         }, delay * 0.9);
       }
-      
+
       // Update counters
       document.getElementById('counter-time').textContent = `${Math.round(performance.now() - startTime)} ms`;
       document.getElementById('counter-ops').textContent = ops;
@@ -1648,11 +1648,11 @@ function runDfsLab(delay) {
 function runDijkstraLab(delay) {
   const { nodes, edges } = state.labData;
   const startId = nodes[0].id;
-  
+
   let dist = {};
   let visited = new Set();
   nodes.forEach(n => dist[n.id] = n.id === startId ? 0 : Infinity);
-  
+
   let ops = 0, relaxations = 0;
   const startTime = performance.now();
 
@@ -1660,7 +1660,7 @@ function runDijkstraLab(delay) {
     // Find unvisited node with min distance
     let current = null;
     let minDist = Infinity;
-    
+
     nodes.forEach(n => {
       if (!visited.has(n.id) && dist[n.id] < minDist) {
         minDist = dist[n.id];
@@ -1672,7 +1672,7 @@ function runDijkstraLab(delay) {
       activeVisualizer.updateNodeState(current, 'current');
       visited.add(current);
       ops++;
-      
+
       // Relax neighbors
       const connectedEdges = edges.filter(e => e.source === current || e.target === current);
       connectedEdges.forEach(edge => {
@@ -1688,11 +1688,11 @@ function runDijkstraLab(delay) {
           }
         }
       });
-      
+
       setTimeout(() => {
         activeVisualizer.updateNodeState(current, 'visited');
       }, delay * 0.9);
-      
+
       // Update counters
       document.getElementById('counter-time').textContent = `${Math.round(performance.now() - startTime)} ms`;
       document.getElementById('counter-ops').textContent = ops;
@@ -1718,14 +1718,14 @@ function updateComplexitySlider(val) {
 function renderComplexityChart(N) {
   const container = document.getElementById('showdown-bars-container');
   container.innerHTML = '';
-  
+
   // Calculate raw operations
   const o1 = 1;
   const olog = Math.log2(N);
   const on = N;
   const onlog = N * Math.log2(N);
   const on2 = N * N;
-  
+
   const values = [
     { key: 'O(1)', val: o1, class: 'o1', label: 'Constant' },
     { key: 'O(log N)', val: olog, class: 'ologn', label: 'Logarithmic' },
@@ -1736,23 +1736,23 @@ function renderComplexityChart(N) {
 
   // Set maximum operation height dynamically
   const maxVal = on2;
-  
+
   values.forEach(item => {
     const group = document.createElement('div');
     group.className = 'chart-bar-group';
-    
+
     // Scale height (between 4px and 100%)
     const heightPercent = Math.max((item.val / maxVal) * 100, 2);
-    
+
     const formattedVal = Math.round(item.val).toLocaleString();
-    
+
     group.innerHTML = `
       <span class="chart-bar-val">${formattedVal}</span>
       <div class="chart-bar ${item.class}" style="height: ${heightPercent}%"></div>
       <span class="chart-bar-label">${item.key}</span>
       <small style="font-size:9px;color:var(--text-light)">${item.label}</small>
     `;
-    
+
     container.appendChild(group);
   });
 
@@ -1761,24 +1761,24 @@ function renderComplexityChart(N) {
   tableBody.innerHTML = `
     <tr>
       <td><strong>Bubble Sort</strong></td>
-      <td>$O(N^2)$</td>
+      <td>O(N^2)</td>
       <td>${Math.round(on2).toLocaleString()} ops</td>
       <td>🔴 Inefficient for size</td>
     </tr>
     <tr>
       <td><strong>Merge Sort</strong></td>
-      <td>$O(N \\log N)$</td>
+      <td>O(N \\log N)</td>
       <td>${Math.round(onlog).toLocaleString()} ops</td>
       <td>🟢 Highly Stable & Fast</td>
     </tr>
     <tr>
       <td><strong>Quick Sort (avg)</strong></td>
-      <td>$O(N \\log N)$</td>
+      <td>O(N \\log N)</td>
       <td>${Math.round(onlog).toLocaleString()} ops</td>
       <td>🟢 Peak CPU performance</td>
     </tr>
   `;
-  
+
   // Explanation text
   const expl = document.getElementById('complexity-explanation-text');
   if (N <= 50) {
@@ -1851,19 +1851,19 @@ function resetQuiz() {
 
 function showQuizQuestion() {
   const current = quizScenarios[state.quizIndex];
-  
+
   // Progress Bar
   const progressPercent = ((state.quizIndex) / quizScenarios.length) * 100;
   document.getElementById('quiz-progress-fill').style.width = `${progressPercent}%`;
-  
+
   document.getElementById('quiz-current-num').textContent = state.quizIndex + 1;
   document.getElementById('quiz-question-title').textContent = current.title;
   document.getElementById('quiz-question-desc').textContent = current.desc;
-  
+
   const choicesBox = document.getElementById('quiz-choices-box');
   choicesBox.innerHTML = '';
   document.getElementById('quiz-answer-feedback').classList.add('hidden');
-  
+
   current.choices.forEach((choice, idx) => {
     const card = document.createElement('div');
     card.className = 'choice-card';
@@ -1876,11 +1876,11 @@ function showQuizQuestion() {
 function selectQuizAnswer(index) {
   const current = quizScenarios[state.quizIndex];
   const choice = current.choices[index];
-  
+
   const feedbackPanel = document.getElementById('quiz-answer-feedback');
   const feedbackTitle = document.getElementById('quiz-feedback-title');
   const feedbackMsg = document.getElementById('quiz-feedback-msg');
-  
+
   // Disable option click events
   document.querySelectorAll('.choice-card').forEach((card, idx) => {
     card.onclick = null;
@@ -1888,9 +1888,9 @@ function selectQuizAnswer(index) {
       card.classList.add('selected');
     }
   });
-  
+
   feedbackPanel.classList.remove('hidden');
-  
+
   if (choice.isCorrect) {
     feedbackPanel.className = 'quiz-answer-feedback correct';
     feedbackTitle.textContent = '🎉 Correct Decision!';
@@ -1940,8 +1940,8 @@ const arenaQuestions = [
     text: 'If we choose element 20 as pivot for partitions in `[25, 4, 30, 10, 20]`, which sub-problem holds elements smaller than 20?',
     visual: 'Array pivot sorting block: 20.',
     choices: [
-      { text: '`[4, 10]`', correct: true },
-      { text: '`[25, 30]`', correct: false }
+      { text: '[4, 10]', correct: true },
+      { text: '[25, 30]', correct: false }
     ],
     why: '4 and 10 are less than 20; they are placed in the left partition.'
   },
@@ -1959,34 +1959,34 @@ const arenaQuestions = [
 function startFinalChallenge() {
   document.getElementById('arena-start-card').classList.add('hidden');
   document.getElementById('arena-play-card').classList.remove('hidden');
-  
+
   state.arenaIndex = 0;
   state.arenaScore = 0;
   state.arenaIncorrectCount = 0;
   state.arenaHintsCount = 0;
-  
+
   showArenaQuestion();
 }
 
 function showArenaQuestion() {
   const current = arenaQuestions[state.arenaIndex];
-  
+
   // Progress Bar
   const progressPercent = ((state.arenaIndex) / arenaQuestions.length) * 100;
   document.getElementById('arena-progress-fill').style.width = `${progressPercent}%`;
-  
+
   document.getElementById('arena-q-num').textContent = state.arenaIndex + 1;
   document.getElementById('arena-question-text').textContent = current.text;
   document.getElementById('arena-live-score').textContent = state.arenaScore;
-  
+
   // Set visual representation
   const visualBox = document.getElementById('arena-visual-box');
   visualBox.innerHTML = `<code style="font-family:monospace;font-size:14px;background:#e2e8f0;padding:8px 16px;border-radius:4px">${current.visual}</code>`;
-  
+
   const optionsContainer = document.getElementById('arena-options-container');
   optionsContainer.innerHTML = '';
   document.getElementById('arena-feedback-box').classList.add('hidden');
-  
+
   current.choices.forEach((choice, idx) => {
     const btn = document.createElement('div');
     btn.className = 'arena-opt';
@@ -1999,7 +1999,7 @@ function showArenaQuestion() {
 function selectArenaChoice(index) {
   const current = arenaQuestions[state.arenaIndex];
   const choice = current.choices[index];
-  
+
   document.querySelectorAll('.arena-opt').forEach((btn, idx) => {
     btn.onclick = null;
     if (idx === index) {
@@ -2010,9 +2010,9 @@ function selectArenaChoice(index) {
   const feedbackBox = document.getElementById('arena-feedback-box');
   const feedbackTitle = document.getElementById('arena-feedback-title');
   const feedbackText = document.getElementById('arena-feedback-text');
-  
+
   feedbackBox.classList.remove('hidden');
-  
+
   if (choice.correct) {
     feedbackTitle.textContent = '🎉 Correct Answer!';
     feedbackTitle.style.color = 'var(--accent-emerald)';
@@ -2038,16 +2038,16 @@ function nextArenaQuestion() {
 function showArenaScorecard() {
   document.getElementById('arena-play-card').classList.add('hidden');
   document.getElementById('arena-scorecard-card').classList.remove('hidden');
-  
+
   const totalScore = state.arenaScore; // Max is 100
   document.getElementById('scorecard-percent').textContent = `${totalScore}%`;
-  
+
   // Calculate specific skills bars
   // 1. Selection score
   const selectionVal = totalScore >= 75 ? 100 : totalScore >= 50 ? 75 : 50;
   document.getElementById('metric-selection-fill').style.width = `${selectionVal}%`;
   document.getElementById('metric-selection-val').textContent = `${selectionVal}%`;
-  
+
   // 2. Execution pathing
   const executionVal = state.arenaIncorrectCount === 0 ? 100 : state.arenaIncorrectCount === 1 ? 75 : 50;
   document.getElementById('metric-execution-fill').style.width = `${executionVal}%`;
@@ -2062,11 +2062,11 @@ function showArenaScorecard() {
   const hintsVal = state.arenaHintsCount === 0 ? 100 : 50;
   document.getElementById('metric-hints-fill').style.width = `${hintsVal}%`;
   document.getElementById('metric-hints-val').textContent = `${hintsVal}%`;
-  
+
   // Award Title
   const titleText = document.getElementById('scorecard-title-text');
   const descText = document.getElementById('scorecard-eval-desc');
-  
+
   if (totalScore >= 85) {
     titleText.textContent = 'ALGORITHM STRATEGIST';
     descText.textContent = 'Excellent! You demonstrated deep comprehension of graph structures, shortest routes, sorting partitions, and performance constraints. Professor Algo salutes you!';
@@ -2078,7 +2078,7 @@ function showArenaScorecard() {
     titleText.textContent = 'ARENA RECRUIT';
     descText.textContent = 'Keep practicing! Review pseudocode cards in Learn Mode, and run visualizer steps in Story Mode to master the concepts.';
   }
-  
+
   // Grant bonus completion XP
   addXP(200);
 }
