@@ -403,54 +403,94 @@
     <section id="tab-complexity" class="tab-section">
       <div class="section-header">
         <h2 class="section-title">THE SORTING SHOWDOWN & GROWTH CURVES</h2>
-        <p class="section-subtitle">Observe how algorithmic efficiency scales as the size of data expands.</p>
+        <p class="section-subtitle">
+          See how algorithmic efficiency changes as the size of the input grows.
+        </p>
       </div>
 
       <div class="showdown-grid">
-        <!-- Interactive Chart growth curves -->
+
+        <!-- Interactive Growth Explorer -->
         <div class="lab-card showdown-chart-card">
           <h3>📈 Growth Rate Explorer</h3>
-          <p>Drag the slider to increase data elements (N) and watch operations multiply based on Time Complexity
-            equations.</p>
+
+          <p>
+            Increase the input size <strong>(N)</strong> and observe how the
+            theoretical operation count grows for different complexity classes.
+          </p>
 
           <div class="slider-box">
-            <label for="complexity-n-slider">Input Size (N): <strong id="val-complexity-n">50</strong></label>
+            <label for="complexity-n-slider">
+              Input Size (N):
+              <strong id="val-complexity-n">50</strong>
+            </label>
+
             <input type="range" id="complexity-n-slider" min="10" max="500" step="10" value="50"
               oninput="updateComplexitySlider(this.value)">
           </div>
 
           <div class="chart-wrapper">
             <div class="chart-bars-container" id="showdown-bars-container">
-              <!-- Generated growth bars -->
+              <!-- Growth bars generated dynamically -->
             </div>
+          </div>
+
+          <!-- Educational note -->
+          <div class="complexity-note">
+            <strong>💡 What you're seeing</strong>
+            <p>
+              These values are theoretical estimates used to visualize how
+              different complexity classes grow as the input size increases.
+              Actual execution time depends on the implementation, hardware,
+              and input data.
+            </p>
           </div>
         </div>
 
-        <!-- Complexity Theory Cards -->
+
+        <!-- Complexity Comparison -->
         <div class="lab-card showdown-table-card">
+
           <h3>🏆 Efficiency Ledger</h3>
+
           <table class="showdown-table">
+
             <thead>
               <tr>
                 <th>Algorithm</th>
                 <th>Complexity</th>
-                <th>Calculated Ops for <span id="n-label-table">N=50</span></th>
-                <th>Classification</th>
+                <th>
+                  Estimated Growth for
+                  <span id="n-label-table">N=50</span>
+                </th>
+                <th>What It Means</th>
               </tr>
             </thead>
+
             <tbody id="showdown-table-body">
               <!-- Injected dynamically -->
             </tbody>
+
           </table>
 
+
+          <!-- Dynamic Explanation -->
           <div class="algorithm-insight-card">
-            <h4>💡 Complexity Insights</h4>
-            <p id="complexity-explanation-text">At N=50, Quadratic O(N^2) algorithms like Bubble Sort run orders of
-              magnitude slower than Linearithmic O(N log N) algorithms like Merge Sort.</p>
+
+            <h4>💡 Complexity Insight</h4>
+
+            <p id="complexity-explanation-text">
+              As N increases, algorithms with quadratic growth increase much
+              faster than algorithms with linearithmic growth.
+            </p>
+
           </div>
+
         </div>
+
       </div>
     </section>
+
 
 
     <!-- 6. WHICH ALGORITHM WOULD YOU CHOOSE? (DECISION QUIZ) -->
