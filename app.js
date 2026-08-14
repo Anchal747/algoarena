@@ -1767,13 +1767,13 @@ function renderComplexityChart(N) {
     </tr>
     <tr>
       <td><strong>Merge Sort</strong></td>
-      <td>O(N \\log N)</td>
+      <td>O(N log N)</td>
       <td>${Math.round(onlog).toLocaleString()} ops</td>
       <td>🟢 Highly Stable & Fast</td>
     </tr>
     <tr>
       <td><strong>Quick Sort (avg)</strong></td>
-      <td>O(N \\log N)</td>
+      <td>O(N log N)</td>
       <td>${Math.round(onlog).toLocaleString()} ops</td>
       <td>🟢 Peak CPU performance</td>
     </tr>
